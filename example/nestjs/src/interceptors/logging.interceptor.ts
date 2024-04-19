@@ -21,6 +21,7 @@ export class LoggingInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap(() => {
         Logger.verbose({
+          app: 'nestjs',
           context: $context,
           handler: $handler,
           message: 'Request succeed',
