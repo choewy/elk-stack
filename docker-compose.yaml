@@ -10,8 +10,8 @@ services:
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./elasticsearch/config:/usr/share/elasticsearch/config:ro,Z
-      - elasticsearch:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -98,6 +98,3 @@ services:
 networks:
   elk:
     driver: bridge
-
-volumes:
-  elasticsearch:
