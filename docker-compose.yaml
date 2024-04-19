@@ -38,6 +38,7 @@ services:
       - ./logstash/input:/usr/share/logstash/input:ro,Z
     ports:
       - 5044:5044
+      - 5045:5045
       - 50000:50000/tcp
       - 50000:50000/udp
       - 9600:9600
