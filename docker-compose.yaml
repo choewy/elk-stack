@@ -1,6 +1,6 @@
 version: '3.8'
 
-name: 'elk'
+name: 'elk-stack'
 
 services:
   elasticsearch:
@@ -11,7 +11,7 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
       - ./elasticsearch/config:/usr/share/elasticsearch/config:ro,Z
-      - ./elasticsearch/data:/usr/share/elasticsearch/data:Z
+      - elasticsearch:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -98,3 +98,6 @@ services:
 networks:
   elk:
     driver: bridge
+
+volumes:
+  elasticsearch:

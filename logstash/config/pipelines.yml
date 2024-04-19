@@ -3,3 +3,6 @@
 
 - pipeline.id: myinput
   path.config: /usr/share/logstash/pipeline/myinput.conf
+
+- pipeline.id: nestjs
+  path.config: /usr/share/logstash/pipeline/nestjs.conf
