@@ -1,0 +1,13 @@
+version: '3.9'
+
+name: 'elk-stack'
+
+services:
+  apache:
+    container_name: elk-apache
+    build: .
+    volumes:
+      - ./src:/var/www/html
+      - .volumes/log:/var/log/apache2
+    ports:
+      - 3001:80
