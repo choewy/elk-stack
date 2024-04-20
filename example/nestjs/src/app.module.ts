@@ -7,6 +7,7 @@ import { TYPEORM_CONFIG, TypeOrmConfig } from './configs/typeorm.config';
 import { LoggerConfig } from './configs/logger.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggingModule } from './modules/logging/logging.module';
+import { UserModule } from './domians/user/user.module';
 
 @Module({
   imports: [
@@ -17,10 +18,12 @@ import { LoggingModule } from './modules/logging/logging.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory(config: ConfigService) {
+        console.log(config.get(TYPEORM_CONFIG));
         return config.get(TYPEORM_CONFIG);
       },
     }),
     LoggingModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
