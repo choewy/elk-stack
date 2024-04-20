@@ -1,0 +1,21 @@
+version: '3.8'
+
+name: 'elk-stack'
+
+services:
+  mariadb:
+    container_name: 'elk-mariadb'
+    image: mariadb:10
+    restart: unless-stopped
+    ports:
+      - 33065:3306
+    volumes:
+      - .volumes/conf.d:/etc/mysql/conf.d:ro
+      - .volumes/initdb:/docker-entrypoint-initdb.d
+      - .volumes/data:/var/lib/mysql
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: local
+      MYSQL_ROOT_PASSWORD: root@password
