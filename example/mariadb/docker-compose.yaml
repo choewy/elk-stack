@@ -12,6 +12,7 @@ services:
     volumes:
       - .volumes/conf.d:/etc/mysql/conf.d:ro
       - .volumes/initdb:/docker-entrypoint-initdb.d
+      - .volumes/logs:/var/log/mysql
       - .volumes/data:/var/lib/mysql
     environment:
       TZ: Asia/Seoul
