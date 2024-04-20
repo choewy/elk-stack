@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 name: 'elk-stack'
 
@@ -20,3 +20,21 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: local
       MYSQL_ROOT_PASSWORD: root@password
+
+  filebeat:
+    depends_on:
+      - mariadb
+    container_name: 'elk-mariadb-filebeat'
+    build:
+      context: .
+      dockerfile: filebeat/Dockerfile
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro,Z
+      - .volumes/logs:/var/log/mysql
+    user: root
+    command:
+      - -e
+      - --strict.perms=false
+    network_mode: host
