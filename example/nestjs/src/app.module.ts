@@ -1,34 +1,26 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { WinstonModule, utilities as winstonUtilities } from 'nest-winston';
-import * as winston from 'winston';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServerConfig } from './configs/server.config';
+import { TYPEORM_CONFIG, TypeOrmConfig } from './configs/typeorm.config';
+import { LoggerConfig } from './configs/logger.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { LoggingModule } from './modules/logging/logging.module';
 
 @Module({
   imports: [
-    WinstonModule.forRoot({
-      transports: [
-        new winston.transports.Console({
-          level: 'verbose',
-          format: winston.format.combine(
-            winston.format.timestamp(),
-            winston.format.ms(),
-            winstonUtilities.format.nestLike('nestjs', {
-              colors: true,
-              prettyPrint: true,
-            }),
-          ),
-        }),
-        new winston.transports.Http({
-          level: 'verbose',
-          host: 'localhost',
-          format: winston.format.json(),
-          port: 5045,
-          handleExceptions: true,
-          handleRejections: true,
-        }),
-      ],
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [ServerConfig, TypeOrmConfig, LoggerConfig],
     }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return config.get(TYPEORM_CONFIG);
+      },
+    }),
+    LoggingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
