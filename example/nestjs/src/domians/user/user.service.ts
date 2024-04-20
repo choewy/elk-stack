@@ -1,20 +1,33 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entities/user.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { UserDto } from './dtos/user.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { GetUsersQueryDto } from './dtos/get-users-query.dto';
 
 @Injectable()
 export class UserService {
   constructor(
+    private readonly dataSource: DataSource,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getAll() {
-    const users = await this.userRepository.find();
+  async getAll(query: GetUsersQueryDto) {
+    let users: UserEntity[] = [];
+
+    if (query.withSlowQuery === '1') {
+      users = await this.dataSource.transaction(async (em) => {
+        const userRepository = em.getRepository(UserEntity);
+        await userRepository.query('SELECT sleep(3);');
+
+        return userRepository.find();
+      });
+    } else {
+      users = await this.userRepository.find();
+    }
 
     return users.map(UserDto.of);
   }
