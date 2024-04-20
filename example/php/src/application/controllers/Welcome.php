@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Welcome extends Core_controller {
+class Welcome extends Core_Controller {
 
 	/**
 	 * Index Page for this controller.
