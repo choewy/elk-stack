@@ -3,11 +3,17 @@ version: '3.9'
 name: 'elk-stack'
 
 services:
-  apache:
-    container_name: elk-apache
+  php-apache:
+    container_name: elk-php-apache
     build: .
     volumes:
       - ./src:/var/www/html
       - .volumes/log:/var/log/apache2
     ports:
-      - 3001:80
+      - 4001:80
+    networks:
+      - elk-mariadb
+
+networks:
+  elk-mariadb:
+    driver: bridge
