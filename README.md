@@ -13,6 +13,14 @@ docker-compose up -d
 
 ## Example
 
+### MariaDB
+
+```bash
+cd example/mariadb
+
+docker-compose up -d
+```
+
 ### NestJS
 
 ```bash
