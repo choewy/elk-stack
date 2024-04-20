@@ -3,3 +3,6 @@
 
 - pipeline.id: application
   path.config: /usr/share/logstash/pipeline/application.conf
+
+- pipeline.id: slowquery
+  path.config: /usr/share/logstash/pipeline/slowquery.conf
