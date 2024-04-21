@@ -5,6 +5,7 @@ name: 'elk-stack'
 services:
   elasticsearch:
     container_name: elasticsearch
+    restart: unless-stopped
     build:
       context: elasticsearch/
       args:
@@ -22,12 +23,12 @@ services:
       discovery.type: single-node
     networks:
       - elk-stack
-    restart: unless-stopped
 
   logstash:
-    container_name: logstash
     depends_on:
       - elasticsearch
+    container_name: logstash
+    restart: unless-stopped
     build:
       context: logstash/
       args:
@@ -48,12 +49,12 @@ services:
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
     networks:
       - elk-stack
-    restart: unless-stopped
 
   kibana:
-    container_name: kibana
     depends_on:
       - elasticsearch
+    container_name: kibana
+    restart: unless-stopped
     build:
       context: kibana/
       args:
@@ -66,15 +67,14 @@ services:
       KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
     networks:
       - elk-stack
-    restart: unless-stopped
 
   setup:
     init: true
-    container_name: setup
     depends_on:
       - elasticsearch
       - kibana
       - logstash
+    container_name: setup
     profiles:
       - setup
     build:

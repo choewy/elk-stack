@@ -4,8 +4,8 @@ name: 'elk-stack'
 
 services:
   mariadb:
-    container_name: mariadb-0
     image: mariadb:10
+    container_name: mariadb-0
     restart: unless-stopped
     ports:
       - 33065:3306
@@ -27,6 +27,7 @@ services:
     depends_on:
       - mariadb
     container_name: mariadb-filebeat
+    restart: unless-stopped
     build:
       context: .
       dockerfile: filebeat/Dockerfile

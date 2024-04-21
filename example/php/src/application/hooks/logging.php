@@ -12,7 +12,6 @@ class Logging {
     $this->logger = $this->controller->logger;
   }
 
-  // TODO testing
   public function log() {
     $this->logger->info('logging', []);
   }

@@ -13,6 +13,7 @@ services:
       LOGSTASH_PORT: 5045
       TYPEORM_HOST: mariadb
       TYPEORM_PORT: 3306
+    restart: unless-stopped
     networks:
       - elk-stack
 
