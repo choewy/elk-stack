@@ -8,9 +8,11 @@ import { LoggerConfig } from './configs/logger.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggingModule } from './modules/logging/logging.module';
 import { UserModule } from './domians/user/user.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
+    HttpModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [ServerConfig, TypeOrmConfig, LoggerConfig],
