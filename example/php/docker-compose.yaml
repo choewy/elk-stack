@@ -12,8 +12,8 @@ services:
     ports:
       - 4001:80
     networks:
-      - elk-mariadb
+      - elk-stack
 
 networks:
-  elk-mariadb:
+  elk-stack:
     driver: bridge

@@ -21,7 +21,7 @@ services:
       MYSQL_DATABASE: local
       MYSQL_ROOT_PASSWORD: root@password
     networks:
-      - elk-mariadb
+      - elk-stack
 
   filebeat:
     depends_on:
@@ -39,8 +39,9 @@ services:
     command:
       - -e
       - --strict.perms=false
-    network_mode: host
+    networks:
+      - elk-stack
 
 networks:
-  elk-mariadb:
+  elk-stack:
     driver: bridge

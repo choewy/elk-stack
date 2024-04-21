@@ -2,7 +2,7 @@
 ## https://github.com/elastic/beats/blob/main/deploy/docker/filebeat.docker.yml
 #
 
-name: mariadb_slow_query
+name: mariadb
 
 filebeat.inputs:
   - type: log
@@ -16,6 +16,6 @@ filebeat.inputs:
       - /var/log/mysql/*.log
 
 output.logstash:
-  index: slowquery
+  index: slow-query-mariadb
   hosts:
-    - localhost:5046
+    - logstash:5046
