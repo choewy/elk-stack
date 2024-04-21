@@ -2,6 +2,7 @@
 
 /**
  * @property CI_DB $db
+ * @property CI_Router $router
  * @property Logger $logger
  * @property Request $request
  * @property Axios $axios

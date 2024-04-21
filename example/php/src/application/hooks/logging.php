@@ -11,8 +11,10 @@ class Logging {
     $this->controller = get_instance();
     $this->logger = $this->controller->logger;
   }
-
-  public function log() {
-    $this->logger->info('logging', []);
+  public function postController() {
+    $this->logger->verbose('post controller', [
+      'className' => $this->controller->router->class,
+      'handlerName' => $this->controller->router->method,
+    ]);
   }
 }
