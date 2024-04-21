@@ -24,23 +24,23 @@ class Logger {
 
   /**
    * @param string $level
-   * @param mixed $message
+   * @param string $message
    * @param mixed $context
    **/
-  private function createLog($level, $message, $context = [], $trace = '') {
+  private function createLog($level, $message, $context = [], $exception = null, $error = null) {
     return [
       'app' => APP_NAME,
       'level' => $level,
-      'message' => [
-        'message' => $message,
-        'context' => $context,
-        'request' => [
+      'request' => [
           'id' => $this->request->getId(),
-          'method' => $this->request->getMethod(),
           'ip' => $this->request->getIpAddress(),
+          'method' => $this->request->getMethod(),
           'url' => $this->request->getUrl(),
-        ]
       ],
+      'message' => $message,
+      'context' => $context,
+      'exception' => $exception,
+      'error'=> $error
     ];
   }
 
@@ -62,13 +62,13 @@ class Logger {
     $this->axios->post(LOGSTASH_URL, $log);
   }
 
-  public function warn($message, $context, $trace = '') {
-    $log = $this->createLog(LogLevel::WARNING, $message, $context, $trace);
+  public function warn($message, $context, $exception = null) {
+    $log = $this->createLog(LogLevel::WARNING, $message, $context, $exception);
     $this->axios->post(LOGSTASH_URL, $log);
   }
 
-  public function error($message, $context, $trace = '') {
-    $log = $this->createLog(LogLevel::ERROR, $message, $context, $trace);
+  public function error($message, $context, $error = null, $trace = '') {
+    $log = $this->createLog(LogLevel::ERROR, $message, $context, null, $error);
     $this->axios->post(LOGSTASH_URL, $log);
   }
 }

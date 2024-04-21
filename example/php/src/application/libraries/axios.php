@@ -13,7 +13,6 @@ class Axios {
   private function getDefaultHeaders() {
     return [
       'content-type: application/json',
-      'accept-encoding: gzip'
     ];
   }
 
@@ -29,10 +28,6 @@ class Axios {
     if ($port === 0) {
       $port = $protocol == 'https' ? 443 : 80;
     }
-
-    echo "프로토콜: " . $protocol . "<br>";
-    echo "호스트: " . $host . "<br>";
-    echo "포트: " . $port . "<br>";
 
     return [
       'protocol' => $protocol,
@@ -59,9 +54,6 @@ class Axios {
         break;
 
       case AxiosHttpMethod::POST:
-        curl_setopt($curl, CURLOPT_POST, true);
-        break;
-
       case AxiosHttpMethod::PATCH:
       case AxiosHttpMethod::PUT:
       case AxiosHttpMethod::DELETE:
@@ -75,10 +67,12 @@ class Axios {
     $curlUrl = $urlComponents['protocol'] . '://' . $urlComponents['host'];
     $curlPort = $urlComponents['port'];
 
+    curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
     curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
     curl_setopt($curl, CURLOPT_HTTPHEADER, $curlHeaders);
     curl_setopt($curl, CURLOPT_URL, $curlUrl);
     curl_setopt($curl, CURLOPT_PORT, $curlPort);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
     if (in_array($method, [
       AxiosHttpMethod::POST,

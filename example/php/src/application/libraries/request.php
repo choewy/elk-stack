@@ -4,9 +4,7 @@ class Request {
   private $id;
 
   public function __construct() {
-    $this->id = random_bytes(16);
-    
-    var_dump(bin2hex($this->id));
+    $this->id = bin2hex(random_bytes(16));
   }
 
   /**
