@@ -2,6 +2,9 @@
 
 /**
  * @property CI_DB $db
+ * @property Logger $logger
+ * @property Request $request
+ * @property Axios $axios
  */
 class Core_Controller extends CI_Controller {
   public function __construct() {

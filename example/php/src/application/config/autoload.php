@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array();
+$autoload['libraries'] = array('request', 'axios', 'logger');
 
 /*
 | -------------------------------------------------------------------
@@ -89,15 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array(
-  'string',
-  'import',
-  'logger',
-  'implements/context_log',
-  'implements/request_log',
-  'implements/response_log',
-  'implements/log',
-);
+$autoload['helper'] = array();
 
 /*
 | -------------------------------------------------------------------

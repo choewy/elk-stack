@@ -85,7 +85,4 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 define('APP_NAME', 'php');
-
-// TODO PHP docker port bind with host
-define('LOGSTASH_HOST', '127.0.0.1');
-define('LOGSTASH_PORT', 5045);
+define('LOGSTASH_URL', 'http://logstash:5045');

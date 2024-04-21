@@ -1,25 +1,19 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-// TODO Logger로 대체
+/**
+ * @property Core_Controller $controller
+ **/
 class Logging {
-  public function createLog() {
-    Log::initialize();
+  private $controller;
+  private $logger;
+
+  public function __construct() {
+    $this->controller = get_instance();
+    $this->logger = $this->controller->logger;
   }
 
-  public function sendLog() {
-    $curl = curl_init();
-    
-    curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json']);
-    curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
-    curl_setopt($curl, CURLOPT_URL, LOGSTASH_HOST);
-    curl_setopt($curl, CURLOPT_PORT, LOGSTASH_PORT);
-    curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, Log::toJSON());
-
-    $error = curl_error($curl);
-
-    echo $error;
-    
-    curl_close($curl);
+  // TODO testing
+  public function log() {
+    $this->logger->info('logging', []);
   }
 }

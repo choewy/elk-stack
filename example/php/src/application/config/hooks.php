@@ -12,16 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$hook['post_controller_constructor'][] = [
-  'class' => 'Logging',
-  'function' => 'createLog',
-  'filename' => 'logging.php',
-  'filepath' => 'hooks'
-];
-
 $hook['post_controller'][] = [
   'class' => 'Logging',
-  'function' => 'sendLog',
+  'function' => 'log',
   'filename' => 'logging.php',
   'filepath' => 'hooks'
 ];
