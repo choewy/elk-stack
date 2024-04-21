@@ -4,7 +4,7 @@ name: 'elk-stack'
 
 services:
   php-apache:
-    container_name: elk-php-apache
+    container_name: php-apache
     build: .
     volumes:
       - ./src:/var/www/html

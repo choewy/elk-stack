@@ -75,7 +75,7 @@ $query_builder = true;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'elk-mariadb',
+	'hostname' => 'mariadb',
 	'port' => '3306',
 	'username' => 'user',
 	'password' => 'password',
