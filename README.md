@@ -26,8 +26,15 @@ docker-compose up -d
 ```bash
 cd example/nestjs
 
-npm ci
-npm run start
+docker-compose up -d
+```
+
+### PHP(apache)
+
+```bash
+cd example/php
+
+docker-compose up -d
 ```
 
 ## Reference
