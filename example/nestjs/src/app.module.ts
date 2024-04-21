@@ -18,7 +18,6 @@ import { UserModule } from './domians/user/user.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory(config: ConfigService) {
-        console.log(config.get(TYPEORM_CONFIG));
         return config.get(TYPEORM_CONFIG);
       },
     }),

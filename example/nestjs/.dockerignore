@@ -1,0 +1,11 @@
+.gitignore
+.logs
+
+Dockerfile
+docker-compose.yaml
+
+dist
+test
+node_modules
+
+README.md
