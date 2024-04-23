@@ -1,0 +1,48 @@
+version: '3.9'
+
+name: 'elk-stack'
+
+services:
+  mariadb:
+    image: mariadb:10
+    container_name: mariadb-0
+    restart: unless-stopped
+    ports:
+      - 33065:3306
+    volumes:
+      - .volumes/conf.d:/etc/mysql/conf.d:ro
+      - .volumes/initdb:/docker-entrypoint-initdb.d
+      - .volumes/logs:/var/log/mysql
+      - .volumes/data:/var/lib/mysql
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: local
+      MYSQL_ROOT_PASSWORD: root@password
+    networks:
+      - elk-stack
+
+  mariadb-filebeat:
+    depends_on:
+      - mariadb
+    container_name: mariadb-filebeat
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: filebeat/Dockerfile
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro,Z
+      - .volumes/logs:/var/log/mysql
+    user: root
+    command:
+      - -e
+      - --strict.perms=false
+    networks:
+      - elk-stack
+
+networks:
+  elk-stack:
+    driver: bridge

@@ -1,0 +1,20 @@
+version: '3.9'
+
+name: 'elk-stack'
+
+services:
+  php-apache:
+    container_name: php-apache
+    restart: unless-stopped
+    build: .
+    volumes:
+      - ./src:/var/www/html
+      - .volumes/log:/var/log/apache2
+    ports:
+      - 4001:80
+    networks:
+      - elk-stack
+
+networks:
+  elk-stack:
+    driver: bridge

@@ -1,8 +1,8 @@
 - pipeline.id: main
   path.config: /usr/share/logstash/pipeline/logstash.conf
 
-- pipeline.id: myinput
-  path.config: /usr/share/logstash/pipeline/myinput.conf
+- pipeline.id: application
+  path.config: /usr/share/logstash/pipeline/application.conf
 
-- pipeline.id: nestjs
-  path.config: /usr/share/logstash/pipeline/nestjs.conf
+- pipeline.id: slow-query
+  path.config: /usr/share/logstash/pipeline/slow-query.conf

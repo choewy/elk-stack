@@ -1,17 +1,18 @@
-version: '3.8'
+version: '3.9'
 
 name: 'elk-stack'
 
 services:
   elasticsearch:
     container_name: elasticsearch
+    restart: unless-stopped
     build:
       context: elasticsearch/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./elasticsearch/config:/usr/share/elasticsearch/config:ro,Z
-      - elasticsearch:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -21,13 +22,13 @@ services:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       discovery.type: single-node
     networks:
-      - elk
-    restart: unless-stopped
+      - elk-stack
 
   logstash:
-    container_name: logstash
     depends_on:
       - elasticsearch
+    container_name: logstash
+    restart: unless-stopped
     build:
       context: logstash/
       args:
@@ -38,6 +39,8 @@ services:
       - ./logstash/input:/usr/share/logstash/input:ro,Z
     ports:
       - 5044:5044
+      - 5045:5045
+      - 5046:5046
       - 50000:50000/tcp
       - 50000:50000/udp
       - 9600:9600
@@ -45,13 +48,13 @@ services:
       LS_JAVA_OPTS: -Xms256m -Xmx256m
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
     networks:
-      - elk
-    restart: unless-stopped
+      - elk-stack
 
   kibana:
-    container_name: kibana
     depends_on:
       - elasticsearch
+    container_name: kibana
+    restart: unless-stopped
     build:
       context: kibana/
       args:
@@ -63,16 +66,15 @@ services:
     environment:
       KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
     networks:
-      - elk
-    restart: unless-stopped
+      - elk-stack
 
   setup:
     init: true
-    container_name: setup
     depends_on:
       - elasticsearch
       - kibana
       - logstash
+    container_name: setup
     profiles:
       - setup
     build:
@@ -93,11 +95,8 @@ services:
       MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}
       BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
     networks:
-      - elk
+      - elk-stack
 
 networks:
-  elk:
+  elk-stack:
     driver: bridge
-
-volumes:
-  elasticsearch:

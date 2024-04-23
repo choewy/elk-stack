@@ -1,0 +1,22 @@
+version: '3.9'
+
+name: 'elk-stack'
+
+services:
+  nestjs:
+    container_name: 'nestjs'
+    build: .
+    ports:
+      - 4000:${PORT}
+    environment:
+      LOGSTASH_HOST: logstash
+      LOGSTASH_PORT: 5045
+      TYPEORM_HOST: mariadb
+      TYPEORM_PORT: 3306
+    restart: unless-stopped
+    networks:
+      - elk-stack
+
+networks:
+  elk-stack:
+    driver: adapter

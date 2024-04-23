@@ -1,0 +1,21 @@
+## Filebeat configuration
+## https://github.com/elastic/beats/blob/main/deploy/docker/filebeat.docker.yml
+#
+
+name: mariadb
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    tail_files: false
+    multiline:
+      pattern: '^# Time:'
+      match: after
+      negate: true
+    paths:
+      - /var/log/mysql/*.log
+
+output.logstash:
+  index: slow-query-mariadb
+  hosts:
+    - logstash:5046
