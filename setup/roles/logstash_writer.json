@@ -2,7 +2,7 @@
   "cluster": ["manage_index_templates", "monitor", "manage_ilm"],
   "indices": [
     {
-      "names": ["logs-generic-default", "logstash-*", "ecs-logstash-*"],
+      "names": ["logs-generic-default", "logstash-*", "ecs-logstash-*", "application-*", "slow-query-*"],
       "privileges": ["write", "create", "create_index", "manage", "manage_ilm"]
     },
     {
