@@ -11,6 +11,9 @@ docker-compose up -d
 - `logstash(profile)` : http://localhost:9600
 - `logstash(http)` : http://localhost:5045
 
+> - id : `elastic`
+> - password: `password`
+
 ## Example
 
 ### MariaDB
@@ -35,6 +38,15 @@ docker-compose up -d
 cd example/php
 
 docker-compose up -d
+```
+
+## Trouble Shooting
+
+> failed to obtain node locks, tried [/usr/share/elasticsearch/data]; maybe these locations are not writable or multiple nodes were started on the same data path?
+
+```bash
+sudo chmod 777 -R ./elasticsearch/data
+docker-compose up setup
 ```
 
 ## Reference
